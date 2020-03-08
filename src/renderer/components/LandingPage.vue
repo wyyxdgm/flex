@@ -8,106 +8,113 @@
         </span>
         <system-information></system-information>
       </div>
-
       <div class="right-side">
         <div class="doc">
-          <div class="title">Getting Started</div>
-          <p>
-            electron-vue comes packed with detailed documentation that covers everything from
-            internal configurations, using the project structure, building your application,
-            and so much more.
-          </p>
-          <button @click="open('https://simulatedgreg.gitbooks.io/electron-vue/content/')">Read the Docs</button><br><br>
-        </div>
-        <div class="doc">
-          <div class="title alt">Other Documentation</div>
-          <button class="alt" @click="open('https://electron.atom.io/docs/')">Electron</button>
-          <button class="alt" @click="open('https://vuejs.org/v2/guide/')">Vue.js</button>
+          <a-button type="primary" @click="increment">Primary</a-button>
+          <div class="num">num:{{main}}</div>
         </div>
       </div>
     </main>
   </div>
 </template>
-
 <script>
-  import SystemInformation from './LandingPage/SystemInformation'
+import SystemInformation from './LandingPage/SystemInformation'
 
-  export default {
-    name: 'landing-page',
-    components: { SystemInformation },
-    methods: {
-      open (link) {
-        this.$electron.shell.openExternal(link)
-      }
+import { createNamespacedHelpers } from 'vuex'
+// import { message } from 'ant-design-vue'
+const { mapState, mapActions } = createNamespacedHelpers('Counter')
+// import { mapActions, mapGetters } from 'vuex'
+
+export default {
+  name: 'landing-page',
+  components: { SystemInformation },
+  methods: {
+    // increment() {
+    //   console.log(1)
+    //   console.log(this.$store)
+    //   this.$store.dispatch('Counter/increment')
+    //   message.success('xxx')
+    // },
+    ...mapActions([
+      'increment' // 将 `this.increment()` 映射为 `this.$store.dispatch('increment')`
+    ]),
+    open (link) {
+      this.$electron.shell.openExternal(link)
     }
+  },
+  computed: {
+    // 使用对象展开运算符将 getter 混入 computed 对象中
+    ...mapState(['main'])
   }
+}
 </script>
-
 <style>
-  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  body { font-family: 'Source Sans Pro', sans-serif; }
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
 
-  #wrapper {
-    background:
-      radial-gradient(
-        ellipse at top left,
-        rgba(255, 255, 255, 1) 40%,
-        rgba(229, 229, 229, .9) 100%
-      );
-    height: 100vh;
-    padding: 60px 80px;
-    width: 100vw;
-  }
+#wrapper {
+  background:
+    radial-gradient(ellipse at top left,
+    rgba(255, 255, 255, 1) 40%,
+    rgba(229, 229, 229, .9) 100%);
+  height: 100vh;
+  padding: 60px 80px;
+  width: 100vw;
+}
 
-  #logo {
-    height: auto;
-    margin-bottom: 20px;
-    width: 420px;
-  }
+#logo {
+  height: auto;
+  margin-bottom: 20px;
+  width: 420px;
+}
 
-  main {
-    display: flex;
-    justify-content: space-between;
-  }
+main {
+  display: flex;
+  justify-content: space-between;
+}
 
-  main > div { flex-basis: 50%; }
+main>div {
+  flex-basis: 50%;
+}
 
-  .left-side {
-    display: flex;
-    flex-direction: column;
-  }
+.left-side {
+  display: flex;
+  flex-direction: column;
+}
 
-  .welcome {
-    color: #555;
-    font-size: 23px;
-    margin-bottom: 10px;
-  }
+.welcome {
+  color: #555;
+  font-size: 23px;
+  margin-bottom: 10px;
+}
 
-  .title {
-    color: #2c3e50;
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 6px;
-  }
+.title {
+  color: #2c3e50;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
 
-  .title.alt {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
+.title.alt {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
 
-  .doc p {
-    color: black;
-    margin-bottom: 10px;
-  }
+.doc p {
+  color: black;
+  margin-bottom: 10px;
+}
 
-  .doc button {
+/* .doc button {
     font-size: .8em;
     cursor: pointer;
     outline: none;
@@ -124,5 +131,5 @@
   .doc button.alt {
     color: #42b983;
     background-color: transparent;
-  }
+  } */
 </style>
