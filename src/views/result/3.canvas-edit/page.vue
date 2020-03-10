@@ -5,7 +5,7 @@
     <a-drawer title="option Drawer" placement="right" :closable="false" @close="ON_CLOSE_DRAWER" :visible="DRAWER_VISIBLE">
       <a-form>
         <a-form-item label="gap" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
-          <a-input addonAfter="points" v-model="option.points" :defaultValue="OPTION_RESULT.points" placeholder="" />
+          <a-input addonAfter="points" v-model="option.points" defaultValue="1" placeholder="" />
         </a-form-item>
         <!-- <a-input v-model="" placeholder="points" />
       <a-input v-model="" placeholder="points" /> -->
