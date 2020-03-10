@@ -3,9 +3,9 @@
     <highlight :value="option_result_string"></highlight>
     <canvas class="full" id="canvasContainer" width="2000" height="2000"></canvas>
     <a-drawer title="option Drawer" placement="right" :closable="false" @close="ON_CLOSE_DRAWER" :visible="DRAWER_VISIBLE">
-      <a-form :form="form">
-        <a-form-item label="gap" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
-          <a-input addonAfter="points" v-model="option.points" placeholder="" />
+      <a-form>
+        <a-form-item label="gap" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
+          <a-input addonAfter="points" v-model="option.points" :defaultValue="OPTION_RESULT.points" placeholder="" />
         </a-form-item>
         <!-- <a-input v-model="" placeholder="points" />
       <a-input v-model="" placeholder="points" /> -->
@@ -27,12 +27,13 @@ export default {
   data() {
     return {
       option: {
-        points: 1
+        points: ''
       },
       canvas: null
     }
   },
   mounted() {
+    this.option.points = this.OPTION_RESULT.option.points
     const fabric = window.fabric
     const canvas = this.canvas = new fabric.Canvas('canvasContainer')
     // `this` 指向 vm 实例
@@ -67,6 +68,9 @@ export default {
     SCAN_RESULT(val) {
       this.canvas.setBackgroundImage(val)
       this.canvas.renderAll()
+    },
+    OPTION_RESULT(val) {
+      console.log('OPTION_RESULT changed')
     }
   },
   computed: {
