@@ -1,27 +1,36 @@
 <template>
   <container>
+    <highlight :value="option_result_string"></highlight>
     <canvas class="full" id="canvasContainer" width="2000" height="2000"></canvas>
-      <!-- <reader :value="SCAN_RESULT"/> -->
+    <a-drawer title="option Drawer" placement="right" :closable="false" @close="ON_CLOSE_DRAWER" :visible="DRAWER_VISIBLE">
+      <a-form :form="form">
+        <a-form-item label="gap" :label-col="{ span: 5 }" :wrapper-col="{ span: 12 }">
+          <a-input addonAfter="points" v-model="option.points" placeholder="" />
+        </a-form-item>
+        <!-- <a-input v-model="" placeholder="points" />
+      <a-input v-model="" placeholder="points" /> -->
+        <a-button type="primary" @click="()=>DRAW_OPTION(option)">Draw</a-button>
+      </a-form>
+    </a-drawer>
+    <!-- <reader :value="SCAN_RESULT"/> -->
     <div slot="footer" flex="main:center">
       <copy :value="SCAN_RESULT" />
     </div>
   </container>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 // import translate from '@/util/translate.tree.data.js'
 export default {
   name: 'canvas-edit',
   title: '画布',
   data() {
     return {
+      option: {
+        points: 1
+      },
       canvas: null
     }
-  },
-  computed: {
-    ...mapState([
-      'SCAN_RESULT'
-    ])
   },
   mounted() {
     const fabric = window.fabric
@@ -48,10 +57,26 @@ export default {
     // canvas.add(rect)
     // canvas.renderAll()
   },
+  methods: {
+    ...mapMutations([
+      'ON_CLOSE_DRAWER',
+      'DRAW_OPTION'
+    ])
+  },
   watch: {
     SCAN_RESULT(val) {
       this.canvas.setBackgroundImage(val)
       this.canvas.renderAll()
+    }
+  },
+  computed: {
+    ...mapState([
+      'SCAN_RESULT',
+      'DRAWER_VISIBLE',
+      'OPTION_RESULT'
+    ]),
+    option_result_string() {
+      return JSON.stringify(this.OPTION_RESULT)
     }
   }
 }
@@ -59,8 +84,13 @@ export default {
 </script>
 <style lang="scss">
 canvas {
-  width: 100vw;
   height: 100vh;
+  border: 1px dashed blue;
+  margin: 20px;
+}
+
+.action-container {
+  position: absolute;
 }
 
 </style>

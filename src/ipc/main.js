@@ -5,6 +5,14 @@ import { image2base64 } from '../util/util'
 /**
  * 渲染进程请求选择文件
  */
+ipcMain.on('DRAW_OPTION', async (event, arg) => {
+  console.log(arg)
+  event.reply('DRAW_OPTION_REPLY', arg)
+})
+
+/**
+ * 渲染进程请求选择文件
+ */
 ipcMain.on('IPC_FILE_SELECT', async (event, arg) => {
   const window = BrowserWindow.getFocusedWindow()
   const result = await dialog.showOpenDialog(window, {
