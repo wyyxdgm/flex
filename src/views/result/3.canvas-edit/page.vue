@@ -14,7 +14,7 @@
     </a-drawer>
     <!-- <reader :value="SCAN_RESULT"/> -->
     <div slot="footer" flex="main:center">
-      <copy :value="SCAN_RESULT" />
+      <copy :value="code" />
     </div>
   </container>
 </template>
@@ -37,8 +37,8 @@ export default {
     const fabric = window.fabric
     const canvas = this.canvas = new fabric.Canvas('canvasContainer')
     // `this` 指向 vm 实例
-    if (this.SCAN_RESULT) {
-      this.canvas.setBackgroundImage(this.SCAN_RESULT || 'https://cn.vuejs.org/images/logo.png', canvas.renderAll.bind(canvas), {
+    if (this.SCAN_RESULT.base64) {
+      this.canvas.setBackgroundImage(this.SCAN_RESULT.base64 || 'https://cn.vuejs.org/images/logo.png', canvas.renderAll.bind(canvas), {
         // Needed to position backgroundImage at 0/0
         originX: 'left',
         originY: 'top'
@@ -66,7 +66,7 @@ export default {
   },
   watch: {
     SCAN_RESULT(val) {
-      this.canvas.setBackgroundImage(val)
+      this.canvas.setBackgroundImage(val.base64)
       this.canvas.renderAll()
     },
     OPTION_RESULT(val) {
@@ -79,6 +79,9 @@ export default {
       'DRAWER_VISIBLE',
       'OPTION_RESULT'
     ]),
+    code () {
+      return JSON.stringify(this.SCAN_RESULT, null, 2)
+    },
     option_result_string() {
       return JSON.stringify(this.OPTION_RESULT)
     }

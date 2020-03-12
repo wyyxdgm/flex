@@ -1,10 +1,10 @@
 <template>
   <container>
     <div class="full">
-      <img :src="SCAN_RESULT">
+      <img :src="SCAN_RESULT.base64">
     </div>
     <div slot="footer" flex="main:center">
-      <copy :value="SCAN_RESULT" />
+      <copy :value="SCAN_RESULT.base64" />
     </div>
   </container>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <container>
     <!-- <highlight :value="SCAN_RESULT"/> -->
-    <textarea class="full" v-model="SCAN_RESULT"></textarea>
+    <textarea class="full" v-model="SCAN_RESULT.filePath"></textarea>
     <div slot="footer" flex="main:center">
       <copy :value="code"/>
     </div>

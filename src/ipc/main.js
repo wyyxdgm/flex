@@ -1,6 +1,9 @@
 import { ipcMain, dialog, BrowserWindow, Notification, shell } from 'electron'
 import scan from '../util/scan'
-import { image2base64 } from '../util/util'
+
+import Controller from './controller'
+
+const controller = new Controller()
 
 /**
  * 渲染进程请求选择文件
@@ -24,6 +27,7 @@ ipcMain.on('IPC_FILE_SELECT', async (event, arg) => {
     message: '请选择一个'
   })
   if (result.canceled === false) {
+    controller.IPC_FILE_SELECT(result.filePaths[0]);
     event.reply('IPC_FILE_SELECT_REPLY', result.filePaths[0])
   }
 })
@@ -32,7 +36,7 @@ ipcMain.on('IPC_FILE_SELECT', async (event, arg) => {
  * 渲染进程请求扫描
  */
 ipcMain.on('IPC_FILE_SCAN', async (event, { filePath }) => {
-  const result = await image2base64(filePath);
+  const result = await controller.IPC_FILE_SCAN(filePath);
   event.reply('IPC_FILE_SCAN_REPLY', result);
 })
 
