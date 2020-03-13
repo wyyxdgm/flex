@@ -11,12 +11,13 @@ export default new Vuex.Store({
     persistedState()
   ],
   state: {
-    OPTION_RESULT: '',
+    OPTION_RESULT: {},
     DRAWER_VISIBLE: false,
     // 扫描的地址
     SCAN_FILE_PATH: '',
     // 扫描结果
-    SCAN_RESULT: [],
+    SCAN_RESULT_MATRIX: [],
+    SCAN_RESULT_BASE64: '',
     // 设置
     SETTING: {
       // 通用
@@ -25,7 +26,7 @@ export default new Vuex.Store({
   },
   mutations: {
     DRAW_OPTION_UPDATE(state, data) {
-      state.OPTION_RESULT = data
+      state.OPTION_RESULT = data.option
     },
     ON_OPEN_DRAWER(state, data) {
       state.DRAWER_VISIBLE = true
@@ -46,6 +47,8 @@ export default new Vuex.Store({
     // 更新 [ 扫描结果 ]
     SCAN_RESULT_UPDATE(state, data) {
       state.SCAN_RESULT = data
+      state.SCAN_RESULT_BASE64 = data.base64
+      state.SCAN_RESULT_MATRIX = data.imageData
     },
     // IPC [ 发送扫描请求 ]
     IPC_FILE_SCAN(state) {

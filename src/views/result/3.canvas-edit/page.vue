@@ -20,6 +20,7 @@
 </template>
 <script>
 import { mapState, mapMutations } from 'vuex'
+// import {imageModel}
 // import translate from '@/util/translate.tree.data.js'
 export default {
   name: 'canvas-edit',
@@ -33,12 +34,12 @@ export default {
     }
   },
   mounted() {
-    this.option.points = this.OPTION_RESULT.option.points
+    this.option.points = this.OPTION_RESULT.points
     const fabric = window.fabric
     const canvas = this.canvas = new fabric.Canvas('canvasContainer')
     // `this` 指向 vm 实例
-    if (this.SCAN_RESULT.base64) {
-      this.canvas.setBackgroundImage(this.SCAN_RESULT.base64 || 'https://cn.vuejs.org/images/logo.png', canvas.renderAll.bind(canvas), {
+    if (this.SCAN_RESULT_BASE64) {
+      this.canvas.setBackgroundImage(this.SCAN_RESULT_BASE64 || 'https://cn.vuejs.org/images/logo.png', canvas.renderAll.bind(canvas), {
         // Needed to position backgroundImage at 0/0
         originX: 'left',
         originY: 'top'
@@ -65,8 +66,8 @@ export default {
     ])
   },
   watch: {
-    SCAN_RESULT(val) {
-      this.canvas.setBackgroundImage(val.base64)
+    SCAN_RESULT_BASE64(val) {
+      this.canvas.setBackgroundImage(val)
       this.canvas.renderAll()
     },
     OPTION_RESULT(val) {
@@ -75,12 +76,13 @@ export default {
   },
   computed: {
     ...mapState([
-      'SCAN_RESULT',
+      'SCAN_RESULT_BASE64',
+      'SCAN_RESULT_MATRIX',
       'DRAWER_VISIBLE',
       'OPTION_RESULT'
     ]),
     code () {
-      return JSON.stringify(this.SCAN_RESULT, null, 2)
+      return JSON.stringify(this.SCAN_RESULT_MATRIX, null, 2)
     },
     option_result_string() {
       return JSON.stringify(this.OPTION_RESULT)

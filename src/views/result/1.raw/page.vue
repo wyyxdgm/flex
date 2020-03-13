@@ -1,7 +1,8 @@
 <template>
   <container>
     <!-- <highlight :value="SCAN_RESULT"/> -->
-    <textarea class="full" v-model="SCAN_RESULT.filePath"></textarea>
+    <textarea class="full" v-model="SCAN_FILE_PATH"></textarea>
+    <textarea class="full" v-model="code"></textarea>
     <div slot="footer" flex="main:center">
       <copy :value="code"/>
     </div>
@@ -15,10 +16,11 @@ export default {
   title: '数据',
   computed: {
     ...mapState([
-      'SCAN_RESULT'
+      'SCAN_FILE_PATH',
+      'SCAN_RESULT_MATRIX'
     ]),
     code () {
-      return JSON.stringify(this.SCAN_RESULT, null, 2)
+      return JSON.stringify(this.SCAN_RESULT_MATRIX, null, 2)
     }
   }
 }

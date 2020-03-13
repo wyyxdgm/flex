@@ -3,15 +3,15 @@ let path = require('path');
 const ImageModel = require('../model/ImageModel');
 import { image2base64 } from '../util/util'
 
-const Shape = require('../model/Shape');
-const ShapeRect = require('../model/ShapeRect');
+// const Shape = require('../model/Shape');
+// const ShapeRect = require('../model/ShapeRect');
 
 
 class Controller {
   constructor() {
     this.model = {
       filePath: null,
-      imageModel: null,
+      imageData: null,
       base64: null,
     };
   }
@@ -19,7 +19,7 @@ class Controller {
     const { model } = this;
     if (filePath) {
       model.filePath = filePath;
-      model.imageModel = null;
+      model.imageData = null;
       model.base64 = null;
     }
     return model;
@@ -27,7 +27,8 @@ class Controller {
   async IPC_FILE_SCAN(filePath) {
     const { model } = this;
     model.base64 = await image2base64(filePath);
-    model.imageModel = await ImageModel.newInstance(filePath);
+    const imageModel = await ImageModel.newInstance(filePath);
+    model.imageData = imageModel.data;
     return model;
   }
 }

@@ -1,10 +1,10 @@
 <template>
   <container>
     <div class="full">
-      <img :src="SCAN_RESULT.base64">
+      <img :src="SCAN_RESULT_BASE64">
     </div>
     <div slot="footer" flex="main:center">
-      <copy :value="SCAN_RESULT.base64" />
+      <copy :value="SCAN_RESULT_BASE64" />
     </div>
   </container>
 </template>
@@ -16,7 +16,7 @@ export default {
   title: '图片',
   computed: {
     ...mapState([
-      'SCAN_RESULT'
+      'SCAN_RESULT_BASE64'
     ])
   }
 }
